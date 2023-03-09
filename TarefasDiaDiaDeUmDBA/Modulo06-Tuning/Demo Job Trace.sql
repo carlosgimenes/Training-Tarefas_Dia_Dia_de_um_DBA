@@ -1,5 +1,5 @@
 /*******************************************************************************************************************************
-(C) 2015, Fabrício Lima Soluções em Banco de Dados
+(C) 2015, Fabrï¿½cio Lima Soluï¿½ï¿½es em Banco de Dados
 
 Site: http://www.fabriciolima.net/
 
@@ -104,7 +104,8 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Exclui o
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'CmdExec', 
-		@command=N'Del "C:\Fabricio\SQL Server\Treinamento\duracao.trc" /Q
+		--@command=N'Del "C:\Fabricio\SQL Server\Treinamento\duracao.trc" /Q
+		@command=N'rm "/var/opt/mssql/traces/Duracao.trc" -f
 		
 		
 ', 

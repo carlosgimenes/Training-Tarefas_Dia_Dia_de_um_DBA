@@ -1,5 +1,5 @@
 /*******************************************************************************************************************************
-(C) 2015, Fabrício Lima Soluções em Banco de Dados
+(C) 2015, Fabrï¿½cio Lima Soluï¿½ï¿½es em Banco de Dados
 
 Site: http://www.fabriciolima.net/
 
@@ -11,13 +11,13 @@ Feedback: contato@fabriciolima.net
 --------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------
---	1)	Olhar via interface gráfica onde ficam os Logins e onde ficam os usuários das bases de dados.
+--	1)	Olhar via interface grï¿½fica onde ficam os Logins e onde ficam os usuï¿½rios das bases de dados.
 --------------------------------------------------------------------------------------------------------------------------------
 --	Logins fica em: "Security" -> "Logins"
---	Usuários ficam em: "Databases" -> Nome Database -> "Security" -> "Users"
+--	Usuï¿½rios ficam em: "Databases" -> Nome Database -> "Security" -> "Users"
 
 --------------------------------------------------------------------------------------------------------------------------------
---	2)	Criação de duas databases para realizar os testes de gerenciamento de acessos
+--	2)	Criaï¿½ï¿½o de duas databases para realizar os testes de gerenciamento de acessos
 --------------------------------------------------------------------------------------------------------------------------------
 if exists(select name from sys.databases where name = 'Treinamento_Modulo02_1')
 	drop database Treinamento_Modulo02_1
@@ -30,36 +30,36 @@ if exists(select name from sys.databases where name = 'Treinamento_Modulo02_2')
 Create database Treinamento_Modulo02_2
 
 --------------------------------------------------------------------------------------------------------------------------------
---	3)	Criação de um Login chamado "Fabricio"
+--	3)	Criaï¿½ï¿½o de um Login chamado "Fabricio"
 --------------------------------------------------------------------------------------------------------------------------------
---	Via interface gráfica, seguir os passos abaixo:
+--	Via interface grï¿½fica, seguir os passos abaixo:
 
 --	3.1)	No "Object Explorer", em "Security" -> "Logins"
 
---	3.2)	Clicar com o botão direito em "Logins" -> "New Login"
+--	3.2)	Clicar com o botï¿½o direito em "Logins" -> "New Login"
 
 --	3.3)	Colocar o nome "Fabricio"
 
---	3.4)	Escolher a opção "SQL Server Authentication"
+--	3.4)	Escolher a opï¿½ï¿½o "SQL Server Authentication"
 
 --	3.5)	Definir uma senha: "fabricio@123"
 
---	3.6)	Habilitar a opção "Enforce password policy"
+--	3.6)	Habilitar a opï¿½ï¿½o "Enforce password policy"
 
 --	3.7)	Em "Default database", escolher a database "Treinamento_Modulo02_1" como a database default desse login
 
---	3.8)	No canto esquerdo da tela de criação de login, clicar em "User Mapping"
+--	3.8)	No canto esquerdo da tela de criaï¿½ï¿½o de login, clicar em "User Mapping"
 
 --	3.9)	Em "Users mapped to this login", selecionar a database "Treinamento_Modulo02_1"
 
---	3.10)	Se dermos um OK nesse momento já criamos o login. Contudo, vamos gerar o script de criação desse login. Para isso 
---			basta clicar em "Script" na parte superior da tela de criação de Login. Após a geração do script, podemos cancelar a 
---			criação do login via interface gráfica.
+--	3.10)	Se dermos um OK nesse momento jï¿½ criamos o login. Contudo, vamos gerar o script de criaï¿½ï¿½o desse login. Para isso 
+--			basta clicar em "Script" na parte superior da tela de criaï¿½ï¿½o de Login. Apï¿½s a geraï¿½ï¿½o do script, podemos cancelar a 
+--			criaï¿½ï¿½o do login via interface grï¿½fica.
 
---	3.11)	Ao fazer isso, uma nova tela é aberta com o script abaixo. Nele podemos ver o nome do login que criamos, 
---			a senha, a database default, a opção de policy habilitada e etc. Execute esse script para criar o login:
+--	3.11)	Ao fazer isso, uma nova tela ï¿½ aberta com o script abaixo. Nele podemos ver o nome do login que criamos, 
+--			a senha, a database default, a opï¿½ï¿½o de policy habilitada e etc. Execute esse script para criar o login:
 
---	Script para a criação do Login
+--	Script para a criaï¿½ï¿½o do Login
 USE [master]
 GO
 
@@ -68,16 +68,16 @@ DEFAULT_DATABASE=Treinamento_Modulo02_1,
 CHECK_EXPIRATION=OFF, CHECK_POLICY=ON
 
 GO
---	Script para a criação do usuário dentro da database Treinamento_Modulo02
+--	Script para a criaï¿½ï¿½o do usuï¿½rio dentro da database Treinamento_Modulo02
 USE Treinamento_Modulo02_1
 GO
 CREATE USER [Fabricio] FOR LOGIN [Fabricio]
 GO
 
 --------------------------------------------------------------------------------------------------------------------------------
---	4)	Validação do login criado
+--	4)	Validaï¿½ï¿½o do login criado
 --------------------------------------------------------------------------------------------------------------------------------
---	Query para ver informações dos logins criados no banco de dados
+--	Query para ver informaï¿½ï¿½es dos logins criados no banco de dados
 SELECT	name,
 		create_date,
 		modify_date,
@@ -90,28 +90,28 @@ From sys.sql_logins
 --------------------------------------------------------------------------------------------------------------------------------
 --	5)	Logar no SQL Server com o Login Fabricio.
 --------------------------------------------------------------------------------------------------------------------------------
---	No "Object Explorer" -> "Connect" -> "Database Engine" -> Mudar o modo de autenticação de "Windows Authentication"
---	para "SQL Server Authentication" -> Colocar o usuário que criamos "Fabricio" e a senha "fabricio@123"
+--	No "Object Explorer" -> "Connect" -> "Database Engine" -> Mudar o modo de autenticaï¿½ï¿½o de "Windows Authentication"
+--	para "SQL Server Authentication" -> Colocar o usuï¿½rio que criamos "Fabricio" e a senha "fabricio@123"
 
 --------------------------------------------------------------------------------------------------------------------------------
---	6)	Ao logar com Login Fabricio, o SQL Server já abre uma conexão no banco para esse usuário.
+--	6)	Ao logar com Login Fabricio, o SQL Server jï¿½ abre uma conexï¿½o no banco para esse usuï¿½rio.
 --------------------------------------------------------------------------------------------------------------------------------
---	Query para conferir as conexões de um determinado usuário
+--	Query para conferir as conexï¿½es de um determinado usuï¿½rio
 select * from sys.sysprocesses 
 where loginame = 'Fabricio' 
 
 --------------------------------------------------------------------------------------------------------------------------------
---	7)	Abrir uma nova query com o usuário "Fabricio"
+--	7)	Abrir uma nova query com o usuï¿½rio "Fabricio"
 --------------------------------------------------------------------------------------------------------------------------------
---	No "Object Explorer" -> Clicar em cima da conexão desse login -> "New Query"
+--	No "Object Explorer" -> Clicar em cima da conexï¿½o desse login -> "New Query"
 
 --------------------------------------------------------------------------------------------------------------------------------
---	8)	Nessa nova query que foi aberta com o usuário Fabricio executar os comandos abaixo
+--	8)	Nessa nova query que foi aberta com o usuï¿½rio Fabricio executar os comandos abaixo
 --------------------------------------------------------------------------------------------------------------------------------
---	Tentar se conectar em outra base de dados de usuário que exista no seu SQL Server
+--	Tentar se conectar em outra base de dados de usuï¿½rio que exista no seu SQL Server
 use Treinamento_Modulo02_2
 
---	Como não demos acesso a essa database, recebemos o erro abaixo:
+--	Como nï¿½o demos acesso a essa database, recebemos o erro abaixo:
 --	The server principal "Fabricio" is not able to access the database Treinamento_Modulo02_2 under the current security context.
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ insert into Modulo02(Ds_Observacao)
 select 'Teste Acesso Database'
 GO 10  -- Esse comando GO 10, repete 10 vezes o meu comando de insert
 
--- Tentar executar esse select com o usuário "Fabricio" em outra conexão
+-- Tentar executar esse select com o usuï¿½rio "Fabricio" em outra conexï¿½o
 select * from Modulo02 
 
 -- Recebemos um erro
@@ -137,17 +137,17 @@ select * from Modulo02
 --	The SELECT permission was denied on the object 'Modulo02', database 'Treinamento_Modulo02', schema 'dbo'.
 
 -- Liberar esse acesso com seu login "sysadmin"
-GRANT SELECT ON Modulo02 TO Fabricio
+GRANT SELECT ON Modulo02 TO Gimenes
 
 -- Tentar fazer o mesmo select com o login "Fabricio"
 select * from Modulo02 
 
--- Agora o comando é executado com sucesso.
+-- Agora o comando ï¿½ executado com sucesso.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	10)	Liberação de acesso para Função
+--	10)	Liberaï¿½ï¿½o de acesso para Funï¿½ï¿½o
 --------------------------------------------------------------------------------------------------------------------------------
---	Criar a função abaixo com o Login "sysadmin"
+--	Criar a funï¿½ï¿½o abaixo com o Login "sysadmin"
 create function fncModulo02 (@Id int)
 returns table
 as
@@ -158,7 +158,7 @@ return
 	where Id_Treinamento = @Id
 )
 
---	Tentar executar a função com o usuário "Fabricio"
+--	Tentar executar a funï¿½ï¿½o com o usuï¿½rio "Fabricio"
 select *
 from fncModulo02(1)
 
@@ -167,16 +167,16 @@ from fncModulo02(1)
 --	The SELECT permission was denied on the object 'fncModulo02', database 'Treinamento_Modulo02', schema 'dbo'.
 
 --	Liberar esse acesso com seu login "sysadmin"
-GRANT SELECT ON fncModulo02 TO Fabricio
+GRANT SELECT ON fncModulo02 TO Gimenes
 
---	Tentar executar a função com o usuário "Fabricio"
+--	Tentar executar a funï¿½ï¿½o com o usuï¿½rio "Fabricio"
 select *
 from fncModulo02(1)
 
---	Agora o comando é executado com sucesso.
+--	Agora o comando ï¿½ executado com sucesso.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	11)	Liberação de acesso para uma VIEW
+--	11)	Liberaï¿½ï¿½o de acesso para uma VIEW
 --------------------------------------------------------------------------------------------------------------------------------
 --	Criar a View abaixo com o Login "sysadmin"
 Create View vwModulo02 
@@ -184,7 +184,7 @@ AS
 select *
 from Modulo02
 
---	Tentar executar a função com o usuário "Fabricio"
+--	Tentar executar a funï¿½ï¿½o com o usuï¿½rio "Fabricio"
 select * from vwModulo02
 
 --	Recebemos um erro
@@ -192,15 +192,15 @@ select * from vwModulo02
 --	The SELECT permission was denied on the object 'vwModulo02', database 'Treinamento_Modulo02', schema 'dbo'.
 
 --	Liberar esse acesso com seu login "sysadmin"
-GRANT SELECT ON vwModulo02 TO Fabricio
+GRANT SELECT ON vwModulo02 TO Gimenes
 
---	Tentar executar a função com o usuário "Fabricio"
+--	Tentar executar a funï¿½ï¿½o com o usuï¿½rio "Fabricio"
 select * from vwModulo02
 
---	Agora o comando é executado com sucesso.
+--	Agora o comando ï¿½ executado com sucesso.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	12) Liberação de acesso para uma Procedure
+--	12) Liberaï¿½ï¿½o de acesso para uma Procedure
 --------------------------------------------------------------------------------------------------------------------------------
 --	Criar a Procedure abaixo com o Login "sysadmin"
 Create procedure stpModulo02
@@ -208,7 +208,7 @@ AS
 select *
 from Modulo02
 
---	Tentar executar a procedure com o usuário "Fabricio"
+--	Tentar executar a procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02
 
 --	Recebemos um erro
@@ -218,13 +218,13 @@ exec stpModulo02
 --	Liberar esse acesso com seu login "sysadmin"
 GRANT EXECUTE ON stpModulo02 TO Fabricio
 
---	Tentar executar a Procedure com o usuário "Fabricio"
+--	Tentar executar a Procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02
 
---	Agora o comando é executado com sucesso.
+--	Agora o comando ï¿½ executado com sucesso.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	13) Liberação de acessos para várias procedures
+--	13) Liberaï¿½ï¿½o de acessos para vï¿½rias procedures
 --------------------------------------------------------------------------------------------------------------------------------
 --	Criar as Procedures abaixo com o Login "sysadmin"
 Create procedure stpModulo02_2
@@ -239,25 +239,25 @@ AS
 select *
 from Modulo02
 
---	Tentar executar a procedure com o usuário "Fabricio"
+--	Tentar executar a procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02_2
 exec stpModulo02_3
 
---	Liberação de execute para TODAS as procedures do banco
+--	Liberaï¿½ï¿½o de execute para TODAS as procedures do banco
 GRANT EXECUTE TO Fabricio
 
---	Tentar executar a procedure com o usuário "Fabricio"
+--	Tentar executar a procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02_2
 exec stpModulo02_3
 
---	Agora as procedures são executadas com sucesso
+--	Agora as procedures sï¿½o executadas com sucesso
 
 --	Retirando o acesso de uma procedure. 
 DENY EXECUTE ON stpModulo02_2 TO Fabricio
 
---	Agora ele tem acesso a todas as procedures, com exceção dessa "stpModulo02_2"
+--	Agora ele tem acesso a todas as procedures, com exceï¿½ï¿½o dessa "stpModulo02_2"
 
---	Tentar executar a procedure com o usuário "Fabricio"
+--	Tentar executar a procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02_2
 exec stpModulo02_3
 
@@ -289,14 +289,14 @@ BEGIN
 	select * from Treinamento_Modulo02_2..Modulo02_Database2
 END
 
---	Tentar executar a procedure com o usuário "Fabricio"
+--	Tentar executar a procedure com o usuï¿½rio "Fabricio"
 exec stpModulo02_4
 
 --	A procedure retorna o primeiro select, mas da um erro no segundo:
 --	Msg 916, Level 14, State 1, Procedure stpModulo02_4, Line 7
 --	The server principal "Fabricio" is not able to access the database "Treinamento_Modulo02_2" under the current security context.
 
---	Isso acontece porque o usuario "Fabricio" não tem acesso na database "Treinamento_Modulo02_2" e tabela "Modulo02_Database2"
+--	Isso acontece porque o usuario "Fabricio" nï¿½o tem acesso na database "Treinamento_Modulo02_2" e tabela "Modulo02_Database2"
 
 --	Criar o usuario na database "Treinamento_Modulo02_2"
 USE Treinamento_Modulo02_2
@@ -308,7 +308,7 @@ USE Treinamento_Modulo02_2
 
 GRANT SELECT ON Modulo02_Database2 TO [Fabricio]
 
--- Tentar novamente executar a procedure com o usuário "Fabricio"
+-- Tentar novamente executar a procedure com o usuï¿½rio "Fabricio"
 USE Treinamento_Modulo02_1
 exec stpModulo02_4
 
@@ -317,7 +317,7 @@ exec stpModulo02_4
 --------------------------------------------------------------------------------------------------------------------------------
 USE Treinamento_Modulo02_1
 
---	Query para retornar as permissões que são dadas a nível de objetos (Mt bacana!)
+--	Query para retornar as permissï¿½es que sï¿½o dadas a nï¿½vel de objetos (Mt bacana!)
 SELECT	STATE_DESC,prmssn.permission_name AS [Permission], sp.type_desc, sp.name, 
 		grantor_principal.name AS [Grantor], grantee_principal.name AS [Grantee] 
 FROM sys.all_objects AS sp 
@@ -336,43 +336,43 @@ ORDER BY 1
 --	Executar esse select com o Login Fabricio
 SELECT * from Modulo02
 
---	Revogar a permissão de SELECT dada para esse objeto e conferir com a primeira query do passo 15 dessa DEMO
+--	Revogar a permissï¿½o de SELECT dada para esse objeto e conferir com a primeira query do passo 15 dessa DEMO
 REVOKE SELECT ON Modulo02 TO Fabricio
 
---	Liberar novamente a permissão de SELECT e conferir com a primeira query do passo 15 dessa DEMO
+--	Liberar novamente a permissï¿½o de SELECT e conferir com a primeira query do passo 15 dessa DEMO
 GRANT SELECT ON Modulo02 TO Fabricio
 
 --	Executar um DENY de SELECT nessa tabela e conferir com a primeira query do passo 15 dessa DEMO
 DENY SELECT ON Modulo02 TO Fabricio
 
---	Como pode ser visto na query o DENY substitui a permissão de select. Se executarmos o GRANT, ele também substitui o DENY
+--	Como pode ser visto na query o DENY substitui a permissï¿½o de select. Se executarmos o GRANT, ele tambï¿½m substitui o DENY
 
---	Liberar novamente a permissão de SELECT e conferir com a primeira query do passo 15 dessa DEMO
+--	Liberar novamente a permissï¿½o de SELECT e conferir com a primeira query do passo 15 dessa DEMO
 GRANT SELECT ON Modulo02 TO Fabricio
 
---	Se não quero dar nem GRANT e nem DENY, o REVOKE retira a última permissão liberada para esse objeto, seja ele GRANT ou DENY.
---	Esse REVOKE vai remover o GRANT, que foi a última permissão dada nessa tabela para esse login
+--	Se nï¿½o quero dar nem GRANT e nem DENY, o REVOKE retira a ï¿½ltima permissï¿½o liberada para esse objeto, seja ele GRANT ou DENY.
+--	Esse REVOKE vai remover o GRANT, que foi a ï¿½ltima permissï¿½o dada nessa tabela para esse login
 REVOKE SELECT ON Modulo02 TO Fabricio
 
 --	Agora vamos dar um DENY para negar o acesso a tabela
 DENY SELECT ON Modulo02 TO Fabricio
 
---	Esse REVOKE vai retirar o DENY, que foi a última permissão dada nessa tabela para esse login
+--	Esse REVOKE vai retirar o DENY, que foi a ï¿½ltima permissï¿½o dada nessa tabela para esse login
 REVOKE SELECT ON Modulo02 TO Fabricio
 
 --------------------------------------------------------------------------------------------------------------------------------
---	16) Caso de uso do DENY em uma situação real do dia a dia
+--	16) Caso de uso do DENY em uma situaï¿½ï¿½o real do dia a dia
 --------------------------------------------------------------------------------------------------------------------------------
---	Liberação de read em todas as tabelas da base
+--	Liberaï¿½ï¿½o de read em todas as tabelas da base
 
---	Liberando permissão de leitura para todas as tabelas, functions e views da database Treinamento_Modulo02_1 para 
+--	Liberando permissï¿½o de leitura para todas as tabelas, functions e views da database Treinamento_Modulo02_1 para 
 --	o login Fabricio
 USE Treinamento_Modulo02_1
 GO
 ALTER ROLE [db_datareader] ADD MEMBER [Fabricio]
 
 GO
---	Criação de uma tabela de salário nessa database
+--	Criaï¿½ï¿½o de uma tabela de salï¿½rio nessa database
 if object_id('Salario') is not null
 	drop table Salario
 
@@ -382,70 +382,70 @@ CREATE TABLE Salario(
 	Vl_Salario numeric(9,2) 
 )
 
---	Inserção dos salários. Dados meramente ilustrativos!!!!!
+--	Inserï¿½ï¿½o dos salï¿½rios. Dados meramente ilustrativos!!!!!
 insert into Salario(Nm_Colaborador,Vl_Salario)
 select 'Estagiario', 675.00
 insert into Salario(Nm_Colaborador,Vl_Salario)
 select 'Gerente', 20000
 insert into Salario(Nm_Colaborador,Vl_Salario)
-select 'DBA em São Paulo', 10000
+select 'DBA em Sï¿½o Paulo', 10000
 insert into Salario(Nm_Colaborador,Vl_Salario)
-select 'DBA em Vitória', 3000
+select 'DBA em Vitï¿½ria', 3000
 
 --	Executar esse select com o Login Fabricio
 select * from Salario
 
---	Deixar o usuário Fabricio ter acesso a todas as tabelas, com exceção da tabela de Salário
+--	Deixar o usuï¿½rio Fabricio ter acesso a todas as tabelas, com exceï¿½ï¿½o da tabela de Salï¿½rio
 DENY SELECT on Salario TO [Fabricio]
 
 --	Ao tentar executar novamente o select com o login Fabricio recebemos o erro abaixo
 --	Msg 229, Level 14, State 5, Line 1
 --	The SELECT permission was denied on the object 'Salario', database 'Treinamento_Modulo02', schema 'dbo'.
 
---	Pronto. Agora ninguém vai ficar olhando salário dos companheiros de trabalho e ficar pedindo aumento para o chefe.
+--	Pronto. Agora ninguï¿½m vai ficar olhando salï¿½rio dos companheiros de trabalho e ficar pedindo aumento para o chefe.
 
 DENY SELECT on Salario TO [Fabricio]
 
 --Retira o DENY e o Fabricio tem acesso novamente
 REVOKE SELECT on Salario TO [Fabricio]
 
--- Nega acesso apenas a coluna Salário
+-- Nega acesso apenas a coluna Salï¿½rio
 DENY SELECT on Salario(Vl_Salario) TO [Fabricio]
 
--- Agora ele só tem acesso as outras colunas
+-- Agora ele sï¿½ tem acesso as outras colunas
 select Id_Colaborador, Nm_Colaborador from Salario
 
 --------------------------------------------------------------------------------------------------------------------------------
---	17) Exclusão do Login Fabricio
+--	17) Exclusï¿½o do Login Fabricio
 --------------------------------------------------------------------------------------------------------------------------------
---	Nesse último teste da demo vamos excluir o Login "Fabricio"
+--	Nesse ï¿½ltimo teste da demo vamos excluir o Login "Fabricio"
 
---	Script para conferir se o login Fabricio tem alguma conexão aberta
+--	Script para conferir se o login Fabricio tem alguma conexï¿½o aberta
 select loginame, 'kill ' + cast(spid as char(2)),*
 from sysprocesses
 where loginame = 'Fabricio'
 
---	Matar a conexão aberta para excluir o Login
+--	Matar a conexï¿½o aberta para excluir o Login
 kill 53
 kill 55
 
---	17.1) Para excluir o Login via interface gráfica, basta ir no "Object Explorer" -> "Security" -> "Login"
+--	17.1) Para excluir o Login via interface grï¿½fica, basta ir no "Object Explorer" -> "Security" -> "Login"
 
---	Em seguida clicar com o botão direito em cima do login "Fabricio" -> Escolher a opção "Delete" 
---	-> Clicar em "OK" -> Confirmar a operação em "OK" novamente.
+--	Em seguida clicar com o botï¿½o direito em cima do login "Fabricio" -> Escolher a opï¿½ï¿½o "Delete" 
+--	-> Clicar em "OK" -> Confirmar a operaï¿½ï¿½o em "OK" novamente.
 
---	Feito isso o Login está excluído.
+--	Feito isso o Login estï¿½ excluï¿½do.
 
---	17.2) Contudo, o usuário "Fabricio" não é excluído automaticamente da base de dados.
+--	17.2) Contudo, o usuï¿½rio "Fabricio" nï¿½o ï¿½ excluï¿½do automaticamente da base de dados.
 
---	Ele tem que ser excluído manualmente para não ficar lixo.
+--	Ele tem que ser excluï¿½do manualmente para nï¿½o ficar lixo.
 
 --	Se Abrir a base "Treinamento_Modulo02_1" -> "Security" -> "Users".
 
---	Vai ver que o Login "Fabricio" está Lá.
+--	Vai ver que o Login "Fabricio" estï¿½ Lï¿½.
 
 --	O que fazer?????
 
---	Basta clicar com o botão direito -> Escolher a opção "Delele" para excluir esse usuário.
+--	Basta clicar com o botï¿½o direito -> Escolher a opï¿½ï¿½o "Delele" para excluir esse usuï¿½rio.
 
---	Não sei porque, mas o SQL Server trabalha assim e temos que realizar essas exclusões manualmente para não deixar lixo nas bases de dados.
+--	Nï¿½o sei porque, mas o SQL Server trabalha assim e temos que realizar essas exclusï¿½es manualmente para nï¿½o deixar lixo nas bases de dados.
