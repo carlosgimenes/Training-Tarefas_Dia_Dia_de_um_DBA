@@ -1,5 +1,5 @@
 /*******************************************************************************************************************************
-(C) 2015, Fabrício Lima Soluções em Banco de Dados
+(C) 2015, Fabrï¿½cio Lima Soluï¿½ï¿½es em Banco de Dados
 
 Site: http://www.fabriciolima.net/
 
@@ -18,16 +18,16 @@ order by A.name
 --------------------------------------------------------------------------------------------------------------------------------
 --	2)	Procedure sp_whoisactive
 --------------------------------------------------------------------------------------------------------------------------------
---	Abrir o código fonte da procedure "WHOISACTIVE" por curiosidade:
+--	Abrir o cï¿½digo fonte da procedure "WHOISACTIVE" por curiosidade:
 --	"..\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Whoisactive.sql"
 
 --------------------------------------------------------------------------------------------------------------------------------
---	2.1)	Executar o comando abaixo em uma nova conexão no SSMS(executa por 10 minutos)
+--	2.1)	Executar o comando abaixo em uma nova conexï¿½o no SSMS(executa por 10 minutos)
 --------------------------------------------------------------------------------------------------------------------------------
 waitfor delay  '00:10:00'
 
 --------------------------------------------------------------------------------------------------------------------------------
---	2.2)	Executar os comandos abaixo em uma segunda conexão no SSMS
+--	2.2)	Executar os comandos abaixo em uma segunda conexï¿½o no SSMS
 --------------------------------------------------------------------------------------------------------------------------------
 if exists(select name from sys.databases where name = 'Treinamento_Modulo06')
 	drop database Treinamento_Modulo06
@@ -49,7 +49,7 @@ SET cod = cod
 -- ROLLBACK
 
 --------------------------------------------------------------------------------------------------------------------------------	
---	2.3)	Executar os comandos abaixo em uma terceira conexão no SSMS
+--	2.3)	Executar os comandos abaixo em uma terceira conexï¿½o no SSMS
 --------------------------------------------------------------------------------------------------------------------------------	
 USE Treinamento_Modulo06
 
@@ -65,7 +65,7 @@ SET cod = cod
 --------------------------------------------------------------------------------------------------------------------------------
 sp_whoisactive
 
---	Analisar a conexão que está com "WAITFOR" e as conexões envolvidas em um "Lock"
+--	Analisar a conexï¿½o que estï¿½ com "WAITFOR" e as conexï¿½es envolvidas em um "Lock"
 
 --	Analisar as colunas retornadas por essa procedure
 
@@ -78,22 +78,22 @@ http://www.fabriciolima.net/blog/2016/03/17/queries-do-dia-a-dia-criando-um-log-
 --Abrir e executar o script abaixo
 --	"..\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Carga Whoisactive.sql"
 
---O Job DBA - Carga Whoisactive será criado. Executar manualmente simulando o agendamento desse JOB:
+--O Job DBA - Carga Whoisactive serï¿½ criado. Executar manualmente simulando o agendamento desse JOB:
 EXEC msdb.dbo.sp_start_job 'DBA - Carga Whoisactive'
 
---Conferindo a informação do log:
---Traces é a base onde estou guardando o log.
+--Conferindo a informaï¿½ï¿½o do log:
+--Traces ï¿½ a base onde estou guardando o log.
 Select *
 from Traces..Resultado_WhoisActive
 order by Dt_log desc
 
--- finalizar as conexões abertas para esse teste
+-- finalizar as conexï¿½es abertas para esse teste
 
 --------------------------------------------------------------------------------------------------------------------------------
 --	2.6) Query similar a who is active, contudo, mais leve de executar.
 --------------------------------------------------------------------------------------------------------------------------------
 --	Para ser executada quando a whoisactive demora muito devido a problema de performance principalmente no TEMPDB
---	Essa só mostra as queries que estão em execução. Queries que estão com transações abertas mas não estão rodando nada, não são retornadas.
+--	Essa sï¿½ mostra as queries que estï¿½o em execuï¿½ï¿½o. Queries que estï¿½o com transaï¿½ï¿½es abertas mas nï¿½o estï¿½o rodando nada, nï¿½o sï¿½o retornadas.
 
 exec sp_whoisactive
 
@@ -102,7 +102,7 @@ Go
 select cast(DATEDIFF(HOUR,B.start_time,GETDATE())/86400 as varchar)+'d '
             +cast((DATEDIFF(SECOND,B.start_time,GETDATE())/3600)%24 as varchar)+'h '
              +cast((DATEDIFF(SECOND,B.start_time,GETDATE())/60)%60 as varchar)+'m '
-             +cast(DATEDIFF(second,B.start_time,GETDATE())%60 as varchar)+'s' Duração
+             +cast(DATEDIFF(second,B.start_time,GETDATE())%60 as varchar)+'s' Duracao
              , A.session_id as Sid, A.status, login_name
              , B.start_time, B.command
              , B.percent_complete
@@ -122,14 +122,14 @@ where /*A.status = 'running' and */A.session_id > 50 and A.session_id <> @@spid
 order by B.start_time
 
 --------------------------------------------------------------------------------------------------------------------------------
---	2.7) Executar um rollback nas duas conexões que realizamos um update para teste
+--	2.7) Executar um rollback nas duas conexï¿½es que realizamos um update para teste
 --------------------------------------------------------------------------------------------------------------------------------
 --	ROLLBACK
 
 --	Voltar aos slides
 
 --------------------------------------------------------------------------------------------------------------------------------
---	3)	Criação de um Server Side Trace 
+--	3)	Criaï¿½ï¿½o de um Server Side Trace 
 --------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -141,11 +141,11 @@ order by B.start_time
 
 --	-> Para "RPC:Completed" marque a coluna TextData que fica desmarcada no evento "RPC:Completed"
 
---	3.1.2) Clique em "Column Filters" -> "Duration" -> "Greater than or Equal" -> Coloque o valor "3000" (está em milesegundos) -> 
+--	3.1.2) Clique em "Column Filters" -> "Duration" -> "Greater than or Equal" -> Coloque o valor "3000" (estï¿½ em milesegundos) -> 
 
---	-> Marque a opção "Exclude rows do not contain values" -> "OK" -> "RUN"
+--	-> Marque a opï¿½ï¿½o "Exclude rows do not contain values" -> "OK" -> "RUN"
 
---	Pronto! O profile já está em execução!
+--	Pronto! O profile jï¿½ estï¿½ em execuï¿½ï¿½o!
 
 --------------------------------------------------------------------------------------------------------------------------------
 --	3.2)	Executar a query abaixo para aparecer no trace(roda por 4 segundos)
@@ -179,7 +179,7 @@ RECONFIGURE
 select * from fn_trace_getinfo (null)
 
 --	Desabilitar?
---	R: Opcional. Eu costumava desabilitar, mas vi gente precisando dessa informação, então agora não desabilito mais.
+--	R: Opcional. Eu costumava desabilitar, mas vi gente precisando dessa informaï¿½ï¿½o, entï¿½o agora nï¿½o desabilito mais.
 --	https://www.simple-talk.com/sql/performance/the-default-trace-in-sql-server---the-power-of-performance-and-security-auditing/
 
 --	Script para "Desabilitar" o Trace Default
@@ -199,22 +199,22 @@ RECONFIGURE
 select * from fn_trace_getinfo (null)
 
 
-/* Pulei para não embolar a cabeça dos iniciantes. Deixei aqui para quem quiser ver como gerar o script de criação de um trace.
+/* Pulei para nï¿½o embolar a cabeï¿½a dos iniciantes. Deixei aqui para quem quiser ver como gerar o script de criaï¿½ï¿½o de um trace.
 --------------------------------------------------------------------------------------------------------------------------------
 --	3.5)	Criando um "Server Side Trace"
 --------------------------------------------------------------------------------------------------------------------------------
---	3.5.1)	Pare o Trace que você havia criado no passo 3.1 clicando no botão "Stop Selected Trace" no SQL Server Profiler. 
+--	3.5.1)	Pare o Trace que vocï¿½ havia criado no passo 3.1 clicando no botï¿½o "Stop Selected Trace" no SQL Server Profiler. 
 
 --	3.5.2)	No SQL Server Profiler, clique em "File" -> "Export" -> "Script Trace Definition" -> "For SQL Server 2005 - SQL11..." -> 
---			-> Salve o arquivo e visualize o código gerado
+--			-> Salve o arquivo e visualize o cï¿½digo gerado
 */
 
 
 --------------------------------------------------------------------------------------------------------------------------------
---	3.6)	Criando um "Server Side Trace" para queries que demoram mais de três segundos
+--	3.6)	Criando um "Server Side Trace" para queries que demoram mais de trï¿½s segundos
 --------------------------------------------------------------------------------------------------------------------------------
 --	Criar a procedure de Trace
---	Abrir: "\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criação do Trace.sql"
+--	Abrir: "\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criaï¿½ï¿½o do Trace.sql"
 
 --	Executar a procedure criada
 EXEC Traces.dbo.stpCreate_Trace
@@ -222,7 +222,7 @@ EXEC Traces.dbo.stpCreate_Trace
 --	Conferir o trace criado
 select * from fn_trace_getinfo (null)
 
---	3.6.1)	Fluxo de manutenção do trace de queries demoradas para pegar os dados do Trace e mandar para a tabela Traces.
+--	3.6.1)	Fluxo de manutenï¿½ï¿½o do trace de queries demoradas para pegar os dados do Trace e mandar para a tabela Traces.
 --	1 - Desabilita o Trace
 --	2 - Pega os dados do arquivo e envia para a tabela Traces
 --	3 - Deleta o arquivo
@@ -256,11 +256,11 @@ Select * from Traces..Traces
 
 
 --------------------------------------------------------------------------------------------------------------------------------
---	4)	Criação de uma rotina para logar Contadores no SQL Server 
+--	4)	Criaï¿½ï¿½o de uma rotina para logar Contadores no SQL Server 
 --------------------------------------------------------------------------------------------------------------------------------
---	4.1)	Abrir o código abaixo e executar a criação da tabela e da procedure para coletar essa informação
+--	4.1)	Abrir o cï¿½digo abaixo e executar a criaï¿½ï¿½o da tabela e da procedure para coletar essa informaï¿½ï¿½o
 --	Criar as tabelas e a procedure
---	Abrir "..\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criação Log Contadores.sql"
+--	Abrir "..\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criaï¿½ï¿½o Log Contadores.sql"
  
 --	4.2)	Executar a procedure de carga dos Contadores criada no passo anterior
 exec Traces.dbo.stpCarga_ContadoresSQL
@@ -270,23 +270,23 @@ FROM Traces..Contador A
 	JOIN Traces..Registro_Contador B ON A.Id_Contador = B.Id_Contador
 ORDER BY 1,2
 
---	4.3)	Agora é só criar um JOB para rodar essa procedure a cada 1 minuto.
---	Dever de casa para quem ainda não tinha trabalhado com JOB no SQL.
+--	4.3)	Agora ï¿½ sï¿½ criar um JOB para rodar essa procedure a cada 1 minuto.
+--	Dever de casa para quem ainda nï¿½o tinha trabalhado com JOB no SQL.
  
 
 --------------------------------------------------------------------------------------------------------------------------------
---	5)	Estatísticas
+--	5)	Estatï¿½sticas
 --------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------
---	5.1)	Visualizando as estatísticas de uma tabela
+--	5.1)	Visualizando as estatï¿½sticas de uma tabela
 --------------------------------------------------------------------------------------------------------------------------------
---	5.1.2)	Criação da tabela
+--	5.1.2)	Criaï¿½ï¿½o da tabela
 
---	Executar essas duas queries para criar duas estatísticas
+--	Executar essas duas queries para criar duas estatï¿½sticas
 use TreinamentoDBA
 
---	Criação de uma tabela para os testes
+--	Criaï¿½ï¿½o de uma tabela para os testes
 if object_id('Empregado') is not null
 	drop table Empregado
 
@@ -305,17 +305,17 @@ insert into Empregado (Nome, Salario, Fl_Estado_Civil)
 select 'Chefe do Fabricio Lima', 30000, 1
 
 insert into Empregado (Nome, Salario, Fl_Estado_Civil)
-select 'Joselito Estagiário', 100, 2
+select 'Joselito Estagiï¿½rio', 100, 2
 
 insert into Empregado (Nome, Salario, Fl_Estado_Civil)
-select 'Hidráulico Oliveira', 1000, 1
+select 'Hidrï¿½ulico Oliveira', 1000, 1
 
---	5.1.3)	Analisar as estatísticas da tabela criada no Object Explorer
+--	5.1.3)	Analisar as estatï¿½sticas da tabela criada no Object Explorer
 --	Expanda a database -> "Tables" -> "Empregado" -> "Statistics"
 
---	Como a tabela foi criada e nenhuma consulta foi realizada, não existe nenhuma estatística para essa tabela.
+--	Como a tabela foi criada e nenhuma consulta foi realizada, nï¿½o existe nenhuma estatï¿½stica para essa tabela.
 
---	5.1.4)	Realizar consultas para criar estatísticas
+--	5.1.4)	Realizar consultas para criar estatï¿½sticas
 
 --	Realizando duas consultas 
 Select *
@@ -324,31 +324,31 @@ where Id_Empregado = 1
 
 Select *
 from Empregado
-where Nome = 'Hidráulico Oliveira'
+where Nome = 'Hidrï¿½ulico Oliveira'
 
---	Agora clique em "Statiscs" com o botão direito e clique em "Refresh".
+--	Agora clique em "Statiscs" com o botï¿½o direito e clique em "Refresh".
 
---	Como pode ser visto, o default das bases é ter o "auto create statistics" habilitado.
---	Dessa forma, quando realizamos uma consulta o SQL cria as estatísticas, caso ainda não exista.
+--	Como pode ser visto, o default das bases ï¿½ ter o "auto create statistics" habilitado.
+--	Dessa forma, quando realizamos uma consulta o SQL cria as estatï¿½sticas, caso ainda nï¿½o exista.
 
 --	Excluir as estatisticas (pegar nome atual da estatistica)
 DROP STATISTICS Empregado._WA_Sys_00000001_070CFC19
 DROP STATISTICS Empregado._WA_Sys_00000002_1B0907CE
 
---	Agora clique em "Statiscs" com o botão direito e clique em "Refresh" para conferir se foram excluídas.
+--	Agora clique em "Statiscs" com o botï¿½o direito e clique em "Refresh" para conferir se foram excluï¿½das.
 
---	5.1.5) Criando estatísticas a partir de índices
+--	5.1.5) Criando estatï¿½sticas a partir de ï¿½ndices
 
---	Criar um índice e conferir as estatisticas
+--	Criar um ï¿½ndice e conferir as estatisticas
 create nonclustered index SK01_Empregado on Empregado(Id_Empregado)
 
---	Agora clique em "Statiscs" com o botão direito e clique em "Refresh" para conferir se ela foi criada.
+--	Agora clique em "Statiscs" com o botï¿½o direito e clique em "Refresh" para conferir se ela foi criada.
 
---	Excluindo o indice que foi criado. Verificar depois se a estatistica foi excluída
+--	Excluindo o indice que foi criado. Verificar depois se a estatistica foi excluï¿½da
 drop index Empregado.SK01_Empregado
 
 --------------------------------------------------------------------------------------------------------------------------------
---	5.2)	Analisando as informações das estatísticas
+--	5.2)	Analisando as informaï¿½ï¿½es das estatï¿½sticas
 --------------------------------------------------------------------------------------------------------------------------------
 use TreinamentoDBA
 
@@ -358,7 +358,7 @@ where Id_Empregado = 1
 
 Select *
 from Empregado
-where Nome = 'Hidráulico Oliveira'
+where Nome = 'Hidrï¿½ulico Oliveira'
 
 Select * from Empregado
 
@@ -366,21 +366,21 @@ Select * from Empregado
 DBCC SHOW_STATISTICS('Empregado','_WA_Sys_00000002_070CFC19')
 WITH HISTOGRAM
 
---	Explicação das colunas do comando acima
---	RANGE_HI_KEY -	É o último valor do range de valores da estatística. No caso do RANGE 'Chefe do Fabricio Lima' seriam nomes de A à C.
+--	Explicaï¿½ï¿½o das colunas do comando acima
+--	RANGE_HI_KEY -	ï¿½ o ï¿½ltimo valor do range de valores da estatï¿½stica. No caso do RANGE 'Chefe do Fabricio Lima' seriam nomes de A ï¿½ C.
 
---	RANGE_ROWS -    É o número de registros presentes nesse range exceto o RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
---					seria todos os nomes de A à C, exceto o 'Chefe do Fabricio Lima'. Como não tem nenhum, é zero. 
+--	RANGE_ROWS -    ï¿½ o nï¿½mero de registros presentes nesse range exceto o RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
+--					seria todos os nomes de A ï¿½ C, exceto o 'Chefe do Fabricio Lima'. Como nï¿½o tem nenhum, ï¿½ zero. 
 
---	EQ_ROWS -   É a quantidade de registros iguais ao RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
---				como só tem um registro igual a esse, o valor é 1.
+--	EQ_ROWS -   ï¿½ a quantidade de registros iguais ao RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
+--				como sï¿½ tem um registro igual a esse, o valor ï¿½ 1.
 
---	DISTINCT_RANGE_ROWS -   É o número de registros distintos, mas não conta o RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
---							como não tem outro registro, o valor é 0.
+--	DISTINCT_RANGE_ROWS -   ï¿½ o nï¿½mero de registros distintos, mas nï¿½o conta o RANGE_HI_KEY. No caso do RANGE 'Chefe do Fabricio Lima', 
+--							como nï¿½o tem outro registro, o valor ï¿½ 0.
 
---	AVG_RANGE_ROWS -	É a média de números duplicados, mas não iguais ao RANGE_HI_KEY. É calculado como RANGE_ROWS / DISTINCT_RANGE_ROWS.
+--	AVG_RANGE_ROWS -	ï¿½ a mï¿½dia de nï¿½meros duplicados, mas nï¿½o iguais ao RANGE_HI_KEY. ï¿½ calculado como RANGE_ROWS / DISTINCT_RANGE_ROWS.
 
---	Insere registros para alterar as estatísticas
+--	Insere registros para alterar as estatï¿½sticas
 insert into Empregado (Nome,Salario,Fl_Estado_Civil)
 select 'Antonio AAAA', 1000, 1
 Go 3
@@ -396,7 +396,7 @@ select 'Antonio CCC', 1000, 1
 DBCC SHOW_STATISTICS('Empregado','_WA_Sys_00000002_070CFC19')
 WITH HISTOGRAM
 
---	Atualiza as estatísticas
+--	Atualiza as estatï¿½sticas
 UPDATE STATISTICS Empregado WITH FULLSCAN 
 
 Select * from Empregado
@@ -421,7 +421,7 @@ SET IDENTITY_INSERT Empregado OFF
 DBCC SHOW_STATISTICS('Empregado','_WA_Sys_00000001_070CFC19')
 WITH HISTOGRAM
 
---	Atualiza as estatísticas
+--	Atualiza as estatï¿½sticas
 UPDATE STATISTICS Empregado WITH FULLSCAN 
 
 DBCC SHOW_STATISTICS('Empregado','_WA_Sys_00000001_070CFC19')
@@ -430,30 +430,30 @@ WITH HISTOGRAM
 Select * from Empregado
 
 --------------------------------------------------------------------------------------------------------------------------------
---	5.3) Atualização automáticas de estatísticas
+--	5.3) Atualizaï¿½ï¿½o automï¿½ticas de estatï¿½sticas
 --------------------------------------------------------------------------------------------------------------------------------
---	Vimos a importância de se atualizar a estatísticas para o SQL Server conhecer o padrão dos dados que compõem os registros de uma tabela.
+--	Vimos a importï¿½ncia de se atualizar a estatï¿½sticas para o SQL Server conhecer o padrï¿½o dos dados que compï¿½em os registros de uma tabela.
 
---	Como o SQL Server atualiza as estatísticas de uma tabela:
+--	Como o SQL Server atualiza as estatï¿½sticas de uma tabela:
 
---	Se a tabela tiver mais de 500 registros (praticamente todas), as estatísticas dessa tabela só serão atualizadas quando tivermos: 
+--	Se a tabela tiver mais de 500 registros (praticamente todas), as estatï¿½sticas dessa tabela sï¿½ serï¿½o atualizadas quando tivermos: 
 
--- (500 + 20% do tamanho da tabela) de alterações na tabela
+-- (500 + 20% do tamanho da tabela) de alteraï¿½ï¿½es na tabela
 
---	O pior é que isso pode acontecer no meio do dia gerando um custo no seu ambiente de produção.
+--	O pior ï¿½ que isso pode acontecer no meio do dia gerando um custo no seu ambiente de produï¿½ï¿½o.
 
---	Imagina uma tabela de 70 milhões de registros, se eu fosse esperar as estatísticas serem atualizadas automaticamente, 
---	desconsiderando as estatísticas de índices que são atualizadas por exemplo com um REBUILD, minhas estatísticas seriam atualizadas quando eu tivesse:
+--	Imagina uma tabela de 70 milhï¿½es de registros, se eu fosse esperar as estatï¿½sticas serem atualizadas automaticamente, 
+--	desconsiderando as estatï¿½sticas de ï¿½ndices que sï¿½o atualizadas por exemplo com um REBUILD, minhas estatï¿½sticas seriam atualizadas quando eu tivesse:
 
--- (500 + 20% * 70.000.000 = 14.000.500) de alterações.
+-- (500 + 20% * 70.000.000 = 14.000.500) de alteraï¿½ï¿½es.
 	
---	14 milhões de alterações para alterar as estatísticas. Esse tempo é muito alto e elas ainda poderiam ser atualizadas durante o dia.
+--	14 milhï¿½es de alteraï¿½ï¿½es para alterar as estatï¿½sticas. Esse tempo ï¿½ muito alto e elas ainda poderiam ser atualizadas durante o dia.
 
 --	Como resolver?
 
---	Criando uma rotina para atualizar suas estatísticas fora do horário de expediente.
+--	Criando uma rotina para atualizar suas estatï¿½sticas fora do horï¿½rio de expediente.
 
---	Query que mostra as alterações nas colunas participantes das estatísticas
+--	Query que mostra as alteraï¿½ï¿½es nas colunas participantes das estatï¿½sticas
 WITH Tamanho_Tabelas AS (
 SELECT obj.name, prt.rows
 FROM sys.objects obj
@@ -474,26 +474,26 @@ WHERE	substring( B.name,1,3) not in ('sys','dtp')
 		--and C.rowmodctr> D.rows*.005
 ORDER BY D.rows
 
---	Essa alteração só muda as estatísticas da coluna NomeCliente
+--	Essa alteraï¿½ï¿½o sï¿½ muda as estatï¿½sticas da coluna NomeCliente
 update Empregado
 set Nome = 'Antonio DDD'
 where Nome = 'Antonio CCC'
 
---	Essa muda as estatísticas de todas as colunas da tabela
+--	Essa muda as estatï¿½sticas de todas as colunas da tabela
 delete Empregado
 where Id_Empregado = 4
 
---	Executar a query que mostra as alterações das estatísticas novamente para conferir que ela realmente teve alteração.
+--	Executar a query que mostra as alteraï¿½ï¿½es das estatï¿½sticas novamente para conferir que ela realmente teve alteraï¿½ï¿½o.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	5.4) Rotina para atualização de estatísticas de todas as bases de um servidor.
+--	5.4) Rotina para atualizaï¿½ï¿½o de estatï¿½sticas de todas as bases de um servidor.
 --------------------------------------------------------------------------------------------------------------------------------
 --	Abrir a procedure
 --	"..\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Atualizacao de Estatisticas.sql"
 
---	Em seguida é só agendar um job em um horário de pouco movimento do seu servidor. 
+--	Em seguida ï¿½ sï¿½ agendar um job em um horï¿½rio de pouco movimento do seu servidor. 
 
---	Recomendo a leitura desse meu post no Blog que detalha essa rotina de update de estatísticas
+--	Recomendo a leitura desse meu post no Blog que detalha essa rotina de update de estatï¿½sticas
 --	http://www.fabriciolima.net/blog/2011/06/29/rotina-para-atualizar-as-estatisticas-do-seu-banco-de-dados/
 
 
@@ -504,7 +504,7 @@ where Id_Empregado = 4
 --------------------------------------------------------------------------------------------------------------------------------
 --	6.1)	INDICE CLUSTERED
 --------------------------------------------------------------------------------------------------------------------------------
---	Criação da tabela e do índice clustered através da primary key
+--	Criaï¿½ï¿½o da tabela e do ï¿½ndice clustered atravï¿½s da primary key
 if object_id('TestesIndices') is not null 
 	drop table TestesIndices
 
@@ -514,13 +514,13 @@ create table TestesIndices(
 	Descricao varchar(1000)
 )
 
---	Script para criar um índice clustered caso ele não exista
+--	Script para criar um ï¿½ndice clustered caso ele nï¿½o exista
 create clustered index SK01_TestesIndices on TestesIndices(Cod) with(FILLFACTOR = 95)
 
---	Lembrando que quando criamos uma PRIMARY key em uma tabela, ela automaticamente cria um índice clustered
---	Selecione o nome da tabela e apert ALT + F1 para conferir o índice criado.
+--	Lembrando que quando criamos uma PRIMARY key em uma tabela, ela automaticamente cria um ï¿½ndice clustered
+--	Selecione o nome da tabela e apert ALT + F1 para conferir o ï¿½ndice criado.
 
---	Comando par anão aparecer mensagens de escritas na aba messages
+--	Comando par anï¿½o aparecer mensagens de escritas na aba messages
 SET NOCOUNT ON
 
 --	Populando a tabela com 100 mil registros (1 minuto)
@@ -528,13 +528,13 @@ insert into TestesIndices(Cod,Descricao)
 select cast(1000000000*rand()/1000 as int),replicate('0',1000)
 GO 100000
 
---	Faça um select na tabela para comferir os dados inseridos
+--	Faï¿½a um select na tabela para comferir os dados inseridos
 select count(*) from TestesIndices
 
 --	CTRL+L - Mostra o execution plan estimado da query
 --	CTRL+M - Mostra o execution plan real da query
 
---	Em alguns casos bem específicos, eles podem ser diferentes. Principalmente em ambientes sem atualização de estatísticas.
+--	Em alguns casos bem especï¿½ficos, eles podem ser diferentes. Principalmente em ambientes sem atualizaï¿½ï¿½o de estatï¿½sticas.
 
 --	Segue referencia abaixo:
 --	http://www.brentozar.com/archive/2014/07/comparing-estimated-actual-execution-plans-sql-server/
@@ -544,22 +544,22 @@ select *
 from TestesIndices
 where Cod = 18
 
---	O SQL fez um índice Seek. Ou seja, ele utilizou a árvore B-Tree do índice para encontrar a coluna Cod
+--	O SQL fez um ï¿½ndice Seek. Ou seja, ele utilizou a ï¿½rvore B-Tree do ï¿½ndice para encontrar a coluna Cod
 
---	Comandos que retornam informações do consumo de recursos de uma query. Utilizo MUITO para fazer tuning.
+--	Comandos que retornam informaï¿½ï¿½es do consumo de recursos de uma query. Utilizo MUITO para fazer tuning.
 set statistics io on
 
 
---	Referência set statistics IO: http://www.practicalsqldba.com/2013/07/sql-server-performance-tuning.html
+--	Referï¿½ncia set statistics IO: http://www.practicalsqldba.com/2013/07/sql-server-performance-tuning.html
 -- http://statisticsparser.com/
 
---	Agora faça um select pela data
+--	Agora faï¿½a um select pela data
 select *
 from TestesIndices
 where Data = '2016-04-25 20:38:00.820'
 
---	O SQL fez um Scan em toda a tabela porque não existe um índice nessa coluna para ele descer a árvore e encontrar o resultado.
---	Como o índice clustered é a própria tabela, ele faz um CLustered Index Scan.
+--	O SQL fez um Scan em toda a tabela porque nï¿½o existe um ï¿½ndice nessa coluna para ele descer a ï¿½rvore e encontrar o resultado.
+--	Como o ï¿½ndice clustered ï¿½ a prï¿½pria tabela, ele faz um CLustered Index Scan.
 
 --	Consumo da query
 
@@ -567,7 +567,7 @@ where Data = '2016-04-25 20:38:00.820'
 --------------------------------------------------------------------------------------------------------------------------------
 --	6.2)	INDICE NONCLUSTERED
 --------------------------------------------------------------------------------------------------------------------------------
---	Criação de um índice nonclustered na coluna Data
+--	Criaï¿½ï¿½o de um ï¿½ndice nonclustered na coluna Data
 create nonclustered index SK02_TestesIndices on TestesIndices(Data)  with(FILLFACTOR=90) 
 
 --	Realizando a mesma consulta com filtro na coluna Data
@@ -575,20 +575,20 @@ select *
 from TestesIndices
 where data = '2016-04-25 20:38:00.820'
 
---	Nesse caso o SQL Server fez um Index Seek no indice SK02, contudo, como eu fiz um select *, esse índice não tem a coluna Descricao.
---	Quando isso acontece o SQL Server tem que ir no índice clustered buscar a informação dessa coluna
---	Para isso ele usa um Key Lookup. Para cada registro retornado no Index Seek ele faz uma busca no indice clustered para pegar a coluna Descrição
---	Para uma consulta que retorna muitos registros, essa operação se torna bem custosa.
+--	Nesse caso o SQL Server fez um Index Seek no indice SK02, contudo, como eu fiz um select *, esse ï¿½ndice nï¿½o tem a coluna Descricao.
+--	Quando isso acontece o SQL Server tem que ir no ï¿½ndice clustered buscar a informaï¿½ï¿½o dessa coluna
+--	Para isso ele usa um Key Lookup. Para cada registro retornado no Index Seek ele faz uma busca no indice clustered para pegar a coluna Descriï¿½ï¿½o
+--	Para uma consulta que retorna muitos registros, essa operaï¿½ï¿½o se torna bem custosa.
 
 --	Consumo da query
 
 
---	Agora vamos criar um índice nonclustered e incluir a coluna Descricao nesse índice
+--	Agora vamos criar um ï¿½ndice nonclustered e incluir a coluna Descricao nesse ï¿½ndice
 create nonclustered index SK03_TestesIndices on TestesIndices(Data) INCLUDE(Descricao) with(FILLFACTOR=90) 
 
------Pausa rápida -----
---Infelizmente o ALT+F1 não mostram os índices com include.
--- Você pode utilizar a consulta abaixo para ver os índices com include:
+-----Pausa rï¿½pida -----
+--Infelizmente o ALT+F1 nï¿½o mostram os ï¿½ndices com include.
+-- Vocï¿½ pode utilizar a consulta abaixo para ver os ï¿½ndices com include:
 select SCHEMA_NAME (o.SCHEMA_ID) SchemaName
   ,o.name ObjectName,i.name IndexName
   ,i.type_desc
@@ -616,17 +616,17 @@ where indCol.splitter is not null
 order by SchemaName, ObjectName, IndexName
 -----Fim da Pausa -----
 
---	Realizando a mesma consulta para ver se o novo indice será utilizado
+--	Realizando a mesma consulta para ver se o novo indice serï¿½ utilizado
 select * 
 from TestesIndices
 where data = '2016-04-25 20:38:00.820' -- utilizar a mesma data do teste anterior
 
---	Agora o SQL volta a fazer um Index Seek porque todas as colunas que ele precisa estão no índice SK03.
+--	Agora o SQL volta a fazer um Index Seek porque todas as colunas que ele precisa estï¿½o no ï¿½ndice SK03.
 
---	Consumo da query sem a necessidade de fazer o lookup no índice clustered
+--	Consumo da query sem a necessidade de fazer o lookup no ï¿½ndice clustered
 
 
---	Tamanho dos índices
+--	Tamanho dos ï¿½ndices
 SELECT i.[name] AS IndexName
     ,SUM(s.[used_page_count]) * 8 AS IndexSizeKB
 FROM sys.dm_db_partition_stats AS s
@@ -637,12 +637,10 @@ where o.name = 'TestesIndices'
 GROUP BY i.[name]
 ORDER BY 2 desc
 
---	Indice 1 - Clustered (Cod, Data e Descrição) - 3 colunas
---  Indice 3 - NonClustered (Data , Descrição e Cod) - 3 colunas
+--	Indice 1 - Clustered (Cod, Data e Descriï¿½ï¿½o) - 3 colunas
+--  Indice 3 - NonClustered (Data , Descriï¿½ï¿½o e Cod) - 3 colunas
 
--- Porque o índice 1 está muito maior que o 3??????
-
-
+-- Porque o ï¿½ndice 1 estï¿½ muito maior que o 3??????
 
 
 
@@ -676,9 +674,11 @@ ORDER BY 2 desc
 
 
 
---	O índice SK01_TestesIndices está maior que o 3 porque ele está fragmentado.
 
---	Desfragmente esse índice e olhe os tamanhos novamente
+
+--	O ï¿½ndice SK01_TestesIndices estï¿½ maior que o 3 porque ele estï¿½ fragmentado.
+
+--	Desfragmente esse ï¿½ndice e olhe os tamanhos novamente
 ALTER INDEX SK01_TestesIndices on TestesIndices REBUILD
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -692,7 +692,7 @@ create table TestesIndices
 Data datetime default(getdate()),
 Descricao varchar(1000))
 
---	Retirar o CTRL + M para fazer esse insert. Caso contrário vai demorar muito
+--	Retirar o CTRL + M para fazer esse insert. Caso contrï¿½rio vai demorar muito
 set statistics io OFF
 
 
@@ -705,23 +705,23 @@ set statistics io On
 --	INDICE NONCLUSTERED
 create nonclustered index SK01_TestesIndices on TestesIndices(Data) INCLUDE(Descricao) with(FILLFACTOR=90) 
 
---	Dar um CRTL+M novamente para ver os planos de execuções das queries
+--	Dar um CRTL+M novamente para ver os planos de execuï¿½ï¿½es das queries
 select * 
 from TestesIndices  
 where data = '2016-04-25 20:41:45.743'
 
 --	Agora o SQL faz um Seek no indice nonclustered e depois faz um RID Lookup na Heap.
 
---	Realizando um select na tabela Cod que ainda não tem índice
+--	Realizando um select na tabela Cod que ainda nï¿½o tem ï¿½ndice
 select * 
 from TestesIndices  
 where cod = 60861
 
---	O SQL faz um Table Scan e ainda sugere a criação de um índice para você. Vamos falar dessa sugestão daqui a pouco.
+--	O SQL faz um Table Scan e ainda sugere a criaï¿½ï¿½o de um ï¿½ndice para vocï¿½. Vamos falar dessa sugestï¿½o daqui a pouco.
 
 --	Consumo da query com o Table Scan
 
---	Criando um índice nonclustered na coluna Cod. Repare que a tabela continua sem índice CLustered
+--	Criando um ï¿½ndice nonclustered na coluna Cod. Repare que a tabela continua sem ï¿½ndice CLustered
 CREATE NONCLUSTERED INDEX SK02_TestesIndices ON [dbo].[TestesIndices] ([Cod]) WITH(FILLFACTOR=95)
 
 --	Consultando novamente
@@ -729,17 +729,17 @@ select *
 from TestesIndices  
 where cod = 212613
 
---	Consumo depois da criação do índice na coluna Cod
+--	Consumo depois da criaï¿½ï¿½o do ï¿½ndice na coluna Cod
 
 
----------------- Comparação SCAN x SEEK -------------------
--- Escolher um código existente e fazer um insert de 20 mil linhas dele
+---------------- Comparaï¿½ï¿½o SCAN x SEEK -------------------
+-- Escolher um cï¿½digo existente e fazer um insert de 20 mil linhas dele
 INSERT INTO TestesIndices(Cod,Data,Descricao)
 SELECT TOP 20000 212613 , Data, Descricao
 from TestesIndices  
 
 
---	Consulta básica por um cod e tenho índice no cod
+--	Consulta bï¿½sica por um cod e tenho ï¿½ndice no cod
 select * 
 from TestesIndices  
 where cod = 212613
@@ -815,7 +815,7 @@ FROM TestesIndices WITH(INDEX=SK01_TestesIndices)
 select Data,SimulandoVariasColunasNoInclude
 FROM TestesIndices WITH(INDEX=SK02_TestesIndices)
 
--- Mesmo teste, mas agora com a coluna Descrição = varchar(1000)
+-- Mesmo teste, mas agora com a coluna Descriï¿½ï¿½o = varchar(1000)
 create nonclustered index SK03_TestesIndices on TestesIndices(Data) INCLUDE(Descricao) with(FILLFACTOR=95) 
 create nonclustered index SK04_TestesIndices on TestesIndices(Data,Descricao) with(FILLFACTOR=95) 
 
@@ -854,11 +854,11 @@ FROM TestesIndices WITH(INDEX=SK04_TestesIndices)
 --Voltar para os slides
 
 --------------------------------------------------------------------------------------------------------------------------------
---	6.4)	Fragmentacao de índices
+--	6.4)	Fragmentacao de ï¿½ndices
 --------------------------------------------------------------------------------------------------------------------------------
---	6.4.1)  Rotina de log da Fragmentação de índices
+--	6.4.1)  Rotina de log da Fragmentaï¿½ï¿½o de ï¿½ndices
 
---	Abrir o script e executar para criar as estruturas de log de Fragmentação de índices
+--	Abrir o script e executar para criar as estruturas de log de Fragmentaï¿½ï¿½o de ï¿½ndices
 --	..\\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Carga Fragmentacao de Indice.sql
 
 --	Tabelas vazias ainda
@@ -866,27 +866,27 @@ select *
 from Traces..vwHistorico_Fragmentacao_Indice
 order by avg_fragmentation_in_percent desc
 
---	Executar a procedure que acabamos de criar e que guarda as informações de fragmentação de índices nas tabelas 
+--	Executar a procedure que acabamos de criar e que guarda as informaï¿½ï¿½es de fragmentaï¿½ï¿½o de ï¿½ndices nas tabelas 
 exec Traces..stpCarga_Fragmentacao_Indice
 
 --	Coloquem essa procedure em um Job no servidor
 
---	View onde vemos as informações dos índices fragmentados
+--	View onde vemos as informaï¿½ï¿½es dos ï¿½ndices fragmentados
 select *
 from Traces..vwHistorico_Fragmentacao_Indice
 where Page_count > 1000
 order by avg_fragmentation_in_percent desc
 
 /******************************************************************************************************************************
---	Informações importantes dessa rotina de fragmentação de índices:
---	É com essas informações que crio minha rotina de REBUILD e REORGANIZE
---	Com essas informações diárias, conseguimos validar se um índice está se fragmentando muito rapidamente 
-	e analisar uma possível alteração do FILLFACTOR desse índice.
+--	Informaï¿½ï¿½es importantes dessa rotina de fragmentaï¿½ï¿½o de ï¿½ndices:
+--	ï¿½ com essas informaï¿½ï¿½es que crio minha rotina de REBUILD e REORGANIZE
+--	Com essas informaï¿½ï¿½es diï¿½rias, conseguimos validar se um ï¿½ndice estï¿½ se fragmentando muito rapidamente 
+	e analisar uma possï¿½vel alteraï¿½ï¿½o do FILLFACTOR desse ï¿½ndice.
 *******************************************************************************************************************************/
 
 -- 6.4.2)	REBUILD x REORGANIZE
 
---	Criação de uma tabela para testes
+--	Criaï¿½ï¿½o de uma tabela para testes
 if object_id('TestesIndices') is not null 
 	drop table TestesIndices
 
@@ -896,10 +896,10 @@ create table TestesIndices(
 	Descricao varchar(1000)
 )
 
---	Criação de um INDICE CLUSTERED 
+--	Criaï¿½ï¿½o de um INDICE CLUSTERED 
 create clustered index SK01_TestesIndices on TestesIndices(Cod) with(FILLFACTOR=95)
 
---	Criação de um INDICE NONCLUSTERED
+--	Criaï¿½ï¿½o de um INDICE NONCLUSTERED
 create nonclustered index SK02_TestesIndices on TestesIndices(Data) INCLUDE(Descricao) with(FILLFACTOR=90) 
 
 --	Realizando um insert de 20 mil linhas
@@ -907,7 +907,7 @@ insert into TestesIndices(Cod,Descricao)
 select cast(1000000000*rand()/1000 as int),replicate('0',500)
 GO 20000
 
---	Query para verificar a fragmentação de índices
+--	Query para verificar a fragmentaï¿½ï¿½o de ï¿½ndices
 SELECT index_Type_desc,avg_page_space_used_in_percent
 	,avg_fragmentation_in_percent	
 	,index_level
@@ -922,23 +922,23 @@ Onde:
 	TreinamentoDBA: Database analisada
 	TestesIndices: Tabela analisada
 
-	Basta alterar esses parâmetros para testar no seu ambiente. Não execute durante o dia para tabelas muito grandes pois pode demorar.
+	Basta alterar esses parï¿½metros para testar no seu ambiente. Nï¿½o execute durante o dia para tabelas muito grandes pois pode demorar.
 *******************************************************************************************************************************/
 GO
 
---	Executar um REORGANIZE do índice SK01 e conferir a fragmentação dos índices
+--	Executar um REORGANIZE do ï¿½ndice SK01 e conferir a fragmentaï¿½ï¿½o dos ï¿½ndices
 ALTER INDEX SK01_TestesIndices ON TestesIndices REORGANIZE
 
---	Executar um REBUILD do índice SK01 e conferir a fragmentação dos índices
+--	Executar um REBUILD do ï¿½ndice SK01 e conferir a fragmentaï¿½ï¿½o dos ï¿½ndices
 ALTER INDEX SK01_TestesIndices ON TestesIndices REBUILD
 
---	Executar um REBUILD do índice SK02 e conferir a fragmentação dos índices
+--	Executar um REBUILD do ï¿½ndice SK02 e conferir a fragmentaï¿½ï¿½o dos ï¿½ndices
 ALTER INDEX SK02_TestesIndices ON TestesIndices REBUILD
 
 --	Abrir a procedure de REBUILD e REORGANIZE
 --	..\\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure REBUILD e REORGANIZE.sql
 
---	Coloque essa procedure de REBUILD em um job diário no servidor
+--	Coloque essa procedure de REBUILD em um job diï¿½rio no servidor
 GO
 
 
@@ -947,12 +947,12 @@ GO
 *******************************************************************************************************************************/
 
 --------------------------------------------------------------------------------------------------------------------------------
---	6.5)	Monitorando a utilização dos índices no SQL Server
+--	6.5)	Monitorando a utilizaï¿½ï¿½o dos ï¿½ndices no SQL Server
 --------------------------------------------------------------------------------------------------------------------------------
 --	Dica de Tuning.
---	Analisar as maiores tabelas do ambiente e validar se os índices delas estão sendo utilizados.
+--	Analisar as maiores tabelas do ambiente e validar se os ï¿½ndices delas estï¿½o sendo utilizados.
 
---	Essa query mostra a atualização dos índices desde a última vez que o SQL Server foi reiniciado. Como ainda não rodei nenhuma query, está vazia.
+--	Essa query mostra a atualizaï¿½ï¿½o dos ï¿½ndices desde a ï¿½ltima vez que o SQL Server foi reiniciado. Como ainda nï¿½o rodei nenhuma query, estï¿½ vazia.
 select getdate(), o.Name,i.name, s.user_seeks,s.user_scans,s.user_lookups, s.user_Updates, 
 	isnull(s.last_user_seek,isnull(s.last_user_scan,s.last_User_Lookup)) Ultimo_acesso,fill_factor
 from sys.dm_db_index_usage_stats s
@@ -961,42 +961,42 @@ from sys.dm_db_index_usage_stats s
 where s.database_id = db_id() and o.name in ('TestesIndices') --and i.name = 'SK02_Telefone_Cliente'
 order by s.user_seeks + s.user_scans + s.user_lookups desc
 
---	Última vez que o SQL Server foi reiniciado
+--	ï¿½ltima vez que o SQL Server foi reiniciado
 select * from sys.databases where database_id = 2
 
---	Realizar o select abaixo e validar novamente a utilização de índices
---	Habilite o ctrl+M para ver o que o SQL está fazendo.
+--	Realizar o select abaixo e validar novamente a utilizaï¿½ï¿½o de ï¿½ndices
+--	Habilite o ctrl+M para ver o que o SQL estï¿½ fazendo.
 Select *
 from TestesIndices
 
---	Agora vimos que o SQL realizou um scan no índice SK01_TestesIndices
+--	Agora vimos que o SQL realizou um scan no ï¿½ndice SK01_TestesIndices
 
---	Realizar o select abaixo e validar novamente a utilização de índices.
+--	Realizar o select abaixo e validar novamente a utilizaï¿½ï¿½o de ï¿½ndices.
 select *
 from TestesIndices
 where cod = 1
 
---	Agora vimos que o SQL realizou um seek  no índice SK01_TestesIndices
+--	Agora vimos que o SQL realizou um seek  no ï¿½ndice SK01_TestesIndices
 
---	Realizar o select abaixo e validar novamente a utilização de índices
+--	Realizar o select abaixo e validar novamente a utilizaï¿½ï¿½o de ï¿½ndices
 select *
 from TestesIndices
 where Data = getdate()
 
---	Agora vimos que o SQL realizou um seek  no índice SK01_TestesIndices
+--	Agora vimos que o SQL realizou um seek  no ï¿½ndice SK01_TestesIndices
 
---	Realizar um update em todos os registros dessa tabela e validar novamente a utilização de índices
+--	Realizar um update em todos os registros dessa tabela e validar novamente a utilizaï¿½ï¿½o de ï¿½ndices
 update TestesIndices
 set Data = Data
 
---	Agora vimos que o SQL realizou uma operação de update nos dois índices.
+--	Agora vimos que o SQL realizou uma operaï¿½ï¿½o de update nos dois ï¿½ndices.
 
---	Criação de uma rotina para armazenar a utilização dos índices por dia
---	Abrir o script abaixo e executar os comandos de criação
---	..\\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criação Histórico Utilização de indices.sql
+--	Criaï¿½ï¿½o de uma rotina para armazenar a utilizaï¿½ï¿½o dos ï¿½ndices por dia
+--	Abrir o script abaixo e executar os comandos de criaï¿½ï¿½o
+--	..\\Tarefas do dia a dia de um DBA\Modulo 06 - Tuning\Demo Procedure Criaï¿½ï¿½o Histï¿½rico Utilizaï¿½ï¿½o de indices.sql
 
---	Execução da procedure para popular as tabelas com os dados de utilizção de índices
---	retirar o CTRL+M para não demorar
+--	Execuï¿½ï¿½o da procedure para popular as tabelas com os dados de utilizï¿½ï¿½o de ï¿½ndices
+--	retirar o CTRL+M para nï¿½o demorar
 exec traces..stpCarga_Utilizacao_Indice
 
 --	Segue o resultado
@@ -1005,11 +1005,11 @@ from Traces..vwHistorico_Utilizacao_Indice
 where Nm_Tabela = 'TestesIndices'
 order by User_Seeks+User_Scans+User_Lookups desc
 
---	Coloquem essa procedure em um job diário. Dessa forma se o SQL Server for reiniciado, você consegue saber 
---	como estava a utilização desse índice antes dele reiniciar.
+--	Coloquem essa procedure em um job diï¿½rio. Dessa forma se o SQL Server for reiniciado, vocï¿½ consegue saber 
+--	como estava a utilizaï¿½ï¿½o desse ï¿½ndice antes dele reiniciar.
 
 --------------------------------------------------------------------------------------------------------------------------------
---	6.6)	Dicas para a criação de índices
+--	6.6)	Dicas para a criaï¿½ï¿½o de ï¿½ndices
 --------------------------------------------------------------------------------------------------------------------------------
 if object_id('TestesIndices') is not null 
 	drop table TestesIndices
@@ -1038,7 +1038,7 @@ select *
 from TestesIndices  
 where cod = 543028
 
---	Query que mostra algumas sugestão de índices para que possamos analisar a criação
+--	Query que mostra algumas sugestï¿½o de ï¿½ndices para que possamos analisar a criaï¿½ï¿½o
 SELECT 
 dm_mid.database_id AS DatabaseID,
 dm_migs.avg_user_impact*(dm_migs.user_seeks+dm_migs.user_scans) Avg_Estimated_Impact,
@@ -1070,12 +1070,12 @@ where cod = 543028
 --	Table 'TestesIndices'. Scan count 1, logical reads 14293, physical reads 0, read-ahead reads 0, 
 --	lob logical reads 0, lob physical reads 0, lob read-ahead reads 0.
 
---	Vamos seguir a sugestão do SQL e criar um índice na coluna que ele pediu. Botão direito em cima da dica, Show missed index details.
+--	Vamos seguir a sugestï¿½o do SQL e criar um ï¿½ndice na coluna que ele pediu. Botï¿½o direito em cima da dica, Show missed index details.
 select * 
 from TestesIndices  
 where cod = 543028
 
---	Altere o comando para ficar no seu padrão
+--	Altere o comando para ficar no seu padrï¿½o
 CREATE NONCLUSTERED INDEX SK01_TestesIndices
 ON [dbo].[TestesIndices] ([Cod]) with(FILLFACTOR=95)
 
@@ -1088,7 +1088,7 @@ where cod = 543028
 --	Table 'TestesIndices'. Scan count 1, logical reads 2, physical reads 0, read-ahead reads 0, 
 --	lob logical reads 0, lob physical reads 0, lob read-ahead reads 0.
 
---	Analisar se realmente o índice que o SQL sugeriu está sendo utilizado
+--	Analisar se realmente o ï¿½ndice que o SQL sugeriu estï¿½ sendo utilizado
 select	getdate(), o.Name,i.name, s.user_seeks,s.user_scans,s.user_lookups, s.user_Updates, 
 		isnull(s.last_user_seek,isnull(s.last_user_scan,s.last_User_Lookup)) Ultimo_acesso, fill_factor
 from sys.dm_db_index_usage_stats s
@@ -1105,9 +1105,9 @@ order by s.user_seeks + s.user_scans + s.user_lookups desc
 --------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------
---	7.1)	Análise das queries demoradas
+--	7.1)	Anï¿½lise das queries demoradas
 --------------------------------------------------------------------------------------------------------------------------------
---	Simulando uma query lenta que aparece no traces várias vezes
+--	Simulando uma query lenta que aparece no traces vï¿½rias vezes
 
 --	Executar 3 vezes
 waitfor delay '00:00:03'
@@ -1141,12 +1141,12 @@ select *
 from Traces..Traces
 order by reads desc
 
---	Se preciso, queries que mais consomem CPU. Normalmente só os 3 primeiros já identificam as piores queries.
+--	Se preciso, queries que mais consomem CPU. Normalmente sï¿½ os 3 primeiros jï¿½ identificam as piores queries.
 select *
 from Traces..Traces
 order by CPU desc
 
---	Em seguida você deve analisar essas queries para poder melhorar.
+--	Em seguida vocï¿½ deve analisar essas queries para poder melhorar.
 
 --	Sempre habilite o Ctrl + M e o SET STATISTICS IO ON
 set statistics io on
@@ -1156,27 +1156,27 @@ select *
 from TestesIndices
 where COd = 1235
 
---	Caso o SQL não sugira um índice, você pode:
---		- Analisar o Execution plan da query e ver se consegue criar um índice melhor do que o índice que o SQL escolheu para essa query
---		- Analisar a query e ver se ela pode ser feita de outra forma (sub-queries, conversão implicita, funções na cláusula WHERE e etc).  
+--	Caso o SQL nï¿½o sugira um ï¿½ndice, vocï¿½ pode:
+--		- Analisar o Execution plan da query e ver se consegue criar um ï¿½ndice melhor do que o ï¿½ndice que o SQL escolheu para essa query
+--		- Analisar a query e ver se ela pode ser feita de outra forma (sub-queries, conversï¿½o implicita, funï¿½ï¿½es na clï¿½usula WHERE e etc).  
 --		- Validar se a query tem filtros o suficiente. Se uma query da um join de 5 tabelas e coloca filtros pequenos que fazem ela 
---		  retorrar quase toda a tabela, nesse caso não resta muita coisa a se fazer a não ser mandar a query para avaliação do desenvolvedor.
+--		  retorrar quase toda a tabela, nesse caso nï¿½o resta muita coisa a se fazer a nï¿½o ser mandar a query para avaliaï¿½ï¿½o do desenvolvedor.
 
---	Não vou entrar em mais detalhes, pois descer o nível no Tuning para análise de queries não é foco do treinamento (por questão de tempo). 
---	Podemos ficar 40 horas falando só de Tuning em um treinamento.
---	O Objetivo aqui é vocês conseguirem identificar essas queries e começar a trabalhar na análise de acordo com essas dicas que eu dei.
+--	Nï¿½o vou entrar em mais detalhes, pois descer o nï¿½vel no Tuning para anï¿½lise de queries nï¿½o ï¿½ foco do treinamento (por questï¿½o de tempo). 
+--	Podemos ficar 40 horas falando sï¿½ de Tuning em um treinamento.
+--	O Objetivo aqui ï¿½ vocï¿½s conseguirem identificar essas queries e comeï¿½ar a trabalhar na anï¿½lise de acordo com essas dicas que eu dei.
 
 
 
 --------------------------------------------------------------------------------------------------------------------------------
---	7.2)	Análise de algumas DMVs para também ajudar na melhoria de performance
+--	7.2)	Anï¿½lise de algumas DMVs para tambï¿½m ajudar na melhoria de performance
 --------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------
 --	7.2.1)	Verifica as databases mais utilizadas do seu banco de dados
 --------------------------------------------------------------------------------------------------------------------------------
 --	Essa query voce pode ordenar por leitura(num_of_reads) e/ou escrita (num_of_writes) para analisar os arquivos que mais 
---	possuem determinado tipo de operação
+--	possuem determinado tipo de operaï¿½ï¿½o
 SELECT
 	DB_NAME(mf.database_id) AS databaseName,
 	name AS File_LogicalName,
@@ -1253,7 +1253,7 @@ cross apply sys.dm_exec_sql_text (sql_handle)
 order by 1 DESC
 
 -----------------------
--- Rotina para excluir dados antigos das tabelas que criamos até aqui
+-- Rotina para excluir dados antigos das tabelas que criamos atï¿½ aqui
 -----------------------
 
 --Abrir e executar o script abaixo
