@@ -1,1 +1,1 @@
-# Training Power Tuning - Tarefas Dia a Dia de um DBA
+# Power Tuning - Tarefas do Dia a Dia de um DBA
