@@ -57,7 +57,7 @@ Devemos ter um retorno como mostrado abaixo:
 
 ---
 
-## **Collation Tests**
+## **Check Collation**
 
 - **Check Instance Collation information**
 
