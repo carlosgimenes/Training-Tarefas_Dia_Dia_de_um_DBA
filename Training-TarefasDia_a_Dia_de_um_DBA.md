@@ -101,3 +101,21 @@ Devemos ter um retorno como mostrado abaixo:
   ```
 
 ---
+
+## Conferir onde as databases estão no servidor
+  
+  ```sql
+  SELECT 
+    a.name, 
+    b.name as 'Logical filename', 
+    b.filename
+  FROM 
+    sys.sysdatabases a
+  INNER JOIN 
+    sys.sysaltfiles b on a.dbid = b.dbid
+  ORDER BY 
+    a.name
+  GO
+  ```
+
+  ---
