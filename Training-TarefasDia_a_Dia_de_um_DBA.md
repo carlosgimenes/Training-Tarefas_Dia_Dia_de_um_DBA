@@ -118,4 +118,21 @@ Devemos ter um retorno como mostrado abaixo:
   GO
   ```
 
-  ---
+---
+
+## Verificando se existem Traces habilitados
+
+  ```sql
+  SELECT * FROM fn_trace_getinfo (null)
+  ```
+
+---
+
+## Verificando as estatísticas de uma Tabela
+
+  ```sql
+  DBCC SHOW_STATISTICS('NomeTabela', 'NomeDaEstatistica')
+  WITH HISTOGRAM;
+  ```
+
+---
